@@ -1,36 +1,30 @@
+from flask import Flask, render_template, jsonify, request
+app = Flask(__name__)
+
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-import urllib.parse
 
-headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-#baseUrl = 'https://search.shopping.naver.com/search/all.nhn?query='
-plusUrl = urllib.parse.quote_plus(input('검색어를 입력하세요: '))
-#Url = baseUrl + urllib.parse.quote_plus(plusUrl)
+from pymongo import MongoClient           # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
+client = MongoClient('localhost', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
+db = client.dbsparta                      # 'dbsparta'라는 이름의 db를 만듭니다.
 
-pageNo=1
-url = f'https://search.shopping.naver.com/search/all.nhn?origQuery={plusUrl}&pagingIndex={pageNo}&pagingSize=40&viewType=list&sort=rel&frm=NVSHPAG&query={plusUrl}'
+## HTML을 주는 부분
+@app.route('/')
+def home():
+   return render_template('index.html')
 
-data = requests.get(url,headers=headers)
-soup = BeautifulSoup(data.text, 'html.parser')
-titles = soup.select(".link")
+## API 역할을 하는 부분
+@app.route('/sresults', methods=['POST'])
 
-for i in titles:
-    print(i.attrs['title'])
-    print(i.attrs['href'])
-    print()
+def searching():
+   keyword_receive = request.form['keyword_give']
+   response = requests.get("https://openapi.naver.com/v1/search/shop.json",
+                           params={"query": keyword_receive, "display": 1},
+                           headers={"X-Naver-Client-Id": "3T2wQJ3_WgsPtjM1hqgp", "X-Naver-Client-Secret": "BrHLav3UBB"})
 
-pageNo+=1
-
-#names = soup.select(".link")
-#title_names = [title.text for title in names]
-#title_links = [title["href"] for title in names]
-#list_total = [title_names, title_links]
-#df = pd.DataFrame(list_total).T
-#print(df)
+   print(response.status_code)
+   return jsonify({'result':'success', 'msg': '검색이 완료되었습니다'})
 
 
-
-
-
-
+if __name__ == '__main__':
+   app.run('0.0.0.0',port=5000,debug=True)
