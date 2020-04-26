@@ -23,7 +23,7 @@ def searching():
                            headers={"X-Naver-Client-Id": "3T2wQJ3_WgsPtjM1hqgp", "X-Naver-Client-Secret": "BrHLav3UBB"})
 
    print(response.status_code)
-   return jsonify({'result':'success', 'msg': '검색이 완료되었습니다'})
+   return jsonify({'result':'success', 'msg': '검색이 완료되었습니다', 'items': response.json()['items']})
 
 
 if __name__ == '__main__':
