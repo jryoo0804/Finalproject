@@ -19,7 +19,7 @@ def home():
 def searching():
    keyword_receive = request.form['keyword_give']
    response = requests.get("https://openapi.naver.com/v1/search/shop.json",
-                           params={"query": keyword_receive, "display": 1},
+                           params={"query": keyword_receive, "display": 10},
                            headers={"X-Naver-Client-Id": "3T2wQJ3_WgsPtjM1hqgp", "X-Naver-Client-Secret": "BrHLav3UBB"})
 
    print(response.status_code)
