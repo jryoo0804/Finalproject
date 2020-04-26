@@ -15,9 +15,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+
+  <!-- 구글폰트 -->
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet">
 
   <script>
     function searchkeyword() {
@@ -27,9 +28,9 @@
         return;
       }
 
-      $(function () {
-        $('#search_results').empty();
-      });
+      // $(function () {
+      //   $('#search_results').empty();
+      // });
 
       $.ajax({
         type: "POST",
@@ -41,7 +42,7 @@
             let title = items[i]['title'];
             let url = items[i]['link'];
             let temp_html = '<tr>\
-              <td class="center"><input type="checkbox" class="nameCheck" name="checkRow"/></td>\
+              <td><input type="checkbox" class="nameCheck" name="checkRow"/></td>\
                                   <td>'+ title + '</td>\
                                   <td>'+ url + '</td>\
                                 </tr>'
@@ -51,59 +52,79 @@
       })
     }
 
-    function checkAll(){
-      if( $("#th_checkAll").is(':checked') ){
+    function checkAll() {
+      if ($("#th_checkAll").is(':checked')) {
         $("input[name=checkRow]").prop("checked", true);
-      }else{
+      } else {
         $("input[name=checkRow]").prop("checked", false);
       }
-}
+    }
 
   </script>
 
   <!-- style -->
   <style type="text/css">
+    * {
+      font-family: 'Nanum Myeongjo', serif;
+    }
+
     h1 {
+      font-family: 'Yeon Sung', cursive;
       text-align: center;
       margin-top: 100px;
       font-size: 50px;
+    }
+
+    .wrap {
+
+      margin-left: 100px;
+      margin-right: 100px;
+
+    }
+
+    table,
+    th,
+    td {
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
   <h1>브랜드 모니터링</h1>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light">
     <div class="mx-auto" style="width: 300px;">
-      <!--form class="form-inline"-->
-      <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
-        aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
-      <!--/form-->
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
+          aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
+        <!--/form-->
     </div>
   </nav>
+  <p<>
+    </p>
+    <div class="wrap">
+      <div id="saving" style="text-align:right">
+        <button type="button" class="btn btn-primary" onclick="exporttoexcel()">EXCEL로 저장</button>
+      </div>
 
-  <div id="saving" style="text-align:right">
-    <button type="button" class="btn btn-primary" onclick="exporttoexcel()">EXCEL로 저장</button>
-  </div>
-
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"/></th>
-        <th scope="col">상품명</th>
-        <th scope="col">URL</th>
-      </tr>
-    </thead>
-    <tbody id="search_results">
-      <tr>
-        <td class="center"><input type="checkbox" class="nameCheck" name="checkRow"/></td>        
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-    </tbody>
-  </table>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th width=20><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();" /></th>
+            <th width=300 scope="col">상품명</th>
+            <th width=300 scope="col">URL</th>
+          </tr>
+        </thead>
+        <tbody id="search_results">
+          <tr>
+            <td class="center"><input type="checkbox" class="nameCheck" name="checkRow" /></td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </body>
 
 </html>
