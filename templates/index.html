@@ -27,6 +27,9 @@
         return;
       }
 
+      $(function () {
+        $('#search_results').empty();
+      });
 
       $.ajax({
         type: "POST",
@@ -64,9 +67,9 @@
   <nav class="navbar navbar-light bg-light">
     <div class="mx-auto" style="width: 300px;">
       <!--form class="form-inline"-->
-        <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
-          aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
+      <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
+        aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
       <!--/form-->
     </div>
   </nav>
