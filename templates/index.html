@@ -40,8 +40,8 @@
           for (let i = 0; i < items.length; i++) {
             let title = items[i]['title'];
             let url = items[i]['link'];
-
             let temp_html = '<tr>\
+              <td class="center"><input type="checkbox" class="nameCheck" name="checkRow"/></td>\
                                   <td>'+ title + '</td>\
                                   <td>'+ url + '</td>\
                                 </tr>'
@@ -50,6 +50,15 @@
         }
       })
     }
+
+    function checkAll(){
+      if( $("#th_checkAll").is(':checked') ){
+        $("input[name=checkRow]").prop("checked", true);
+      }else{
+        $("input[name=checkRow]").prop("checked", false);
+      }
+}
+
   </script>
 
   <!-- style -->
@@ -73,15 +82,23 @@
       <!--/form-->
     </div>
   </nav>
+
+  <div id="saving" style="text-align:right">
+    <button type="button" class="btn btn-primary" onclick="exporttoexcel()">EXCEL로 저장</button>
+  </div>
+
+
   <table class="table">
     <thead>
       <tr>
+        <th><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"/></th>
         <th scope="col">상품명</th>
         <th scope="col">URL</th>
       </tr>
     </thead>
     <tbody id="search_results">
       <tr>
+        <td class="center"><input type="checkbox" class="nameCheck" name="checkRow"/></td>        
         <td>Otto</td>
         <td>@mdo</td>
       </tr>
