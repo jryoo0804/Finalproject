@@ -33,8 +33,8 @@
         url: "/sresults",
         data: { keyword_give: q },
         success: function (response) {
-          let keywordresults = response['items'];
-          for (let i = 0; i < keywordresults.length; i++) {
+          let items = response['items'];
+          for (let i = 0; i < items.length; i++) {
             let title = items[i]['title'];
             let url = items[i]['link'];
 
@@ -63,11 +63,11 @@
   <h1>브랜드 모니터링</h1>
   <nav class="navbar navbar-light bg-light">
     <div class="mx-auto" style="width: 300px;">
-      <form class="form-inline">
+      <!--form class="form-inline"-->
         <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
           aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" , type="submit">검색</button>
-      </form>
+        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
+      <!--/form-->
     </div>
   </nav>
   <table class="table">
