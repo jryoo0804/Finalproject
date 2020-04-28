@@ -15,16 +15,13 @@ def home():
 
 ## API 역할을 하는 부분
 @app.route('/sresults', methods=['POST'])
-
 def searching():
    keyword_receive = request.form['keyword_give']
    response = requests.get("https://openapi.naver.com/v1/search/shop.json",
                            params={"query": keyword_receive, "display": 10},
                            headers={"X-Naver-Client-Id": "3T2wQJ3_WgsPtjM1hqgp", "X-Naver-Client-Secret": "BrHLav3UBB"})
-
    print(response.status_code)
    return jsonify({'result':'success', 'msg': '검색이 완료되었습니다', 'items': response.json()['items']})
-
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
