@@ -28,9 +28,9 @@
         return;
       }
 
-      // $(function () {
-      //   $('#search_results').empty();
-      // });
+      $(function () {
+        $('#search_results').empty();
+      });
 
       $.ajax({
         type: "POST",
@@ -59,6 +59,40 @@
         $("input[name=checkRow]").prop("checked", false);
       }
     }
+
+    function exporttoexcel() {
+
+      var values = new Array();
+
+      $.each($("input[name=checkRow]:checked").closest("td").siblings("td"), function () {
+        values.push($(this).text())
+      })
+
+
+        // var param = [];
+        // var dataselected = [];
+        // for (var i = 0; i < '#search_results'.length; i++) {
+        //   if ($('.checkbox').is(':checked')) {
+        //     dataselected = {
+        //       title: $(dataselected).parents('tr').find(".title").val(),
+        //       url: $(dataselected).parents('tr').find(".url").val()
+        //     };
+        //     param.push(dataselected);
+        //   }
+        // }
+
+
+        $.ajax({
+        type: "POST",
+        URL: "/json2csv",
+        header: { "content-type": "application/json" },
+        data: JSON.stringify(values),
+        success: function (response) {
+        }
+      })
+    }
+
+
 
   </script>
 
@@ -94,37 +128,37 @@
   <h1>브랜드 모니터링</h1>
   <nav class="navbar navbar-light">
     <div class="mx-auto" style="width: 300px;">
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
-          aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
-        <!--/form-->
+      <!--      <form class="form-inline">-->
+      <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
+        aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
+      <!--/form-->
     </div>
   </nav>
-  <p<>
-    </p>
-    <div class="wrap">
-      <div id="saving" style="text-align:right">
-        <button type="button" class="btn btn-primary" onclick="exporttoexcel()">EXCEL로 저장</button>
-      </div>
-
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th width=20><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();" /></th>
-            <th width=300 scope="col">상품명</th>
-            <th width=300 scope="col">URL</th>
-          </tr>
-        </thead>
-        <tbody id="search_results">
-          <tr>
-            <td class="center"><input type="checkbox" class="nameCheck" name="checkRow" /></td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-        </tbody>
-      </table>
+  <p>
+  </p>
+  <div class="wrap">
+    <div id="saving" style="text-align:right">
+      <button type="button" class="btn btn-primary" onclick="exporttoexcel()">EXCEL로 저장</button>
     </div>
+
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th width=20><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"></th>
+          <th width=300 scope="col">상품명</th>
+          <th width=300 scope="col">URL</th>
+        </tr>
+      </thead>
+      <tbody id="search_results">
+        <tr>
+          <td class="nameCheck center"><input type="checkbox" class="nameCheck" name="checkRow" /></td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 
 </html>
