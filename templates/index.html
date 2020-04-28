@@ -67,30 +67,35 @@
       $.each($("input[name=checkRow]:checked").closest("td").siblings("td"), function () {
         values.push($(this).text())
       })
-
-
-        // var param = [];
-        // var dataselected = [];
-        // for (var i = 0; i < '#search_results'.length; i++) {
-        //   if ($('.checkbox').is(':checked')) {
-        //     dataselected = {
-        //       title: $(dataselected).parents('tr').find(".title").val(),
-        //       url: $(dataselected).parents('tr').find(".url").val()
-        //     };
-        //     param.push(dataselected);
-        //   }
-        // }
-
-
-        $.ajax({
-        type: "POST",
-        URL: "/json2csv",
-        header: { "content-type": "application/json" },
-        data: JSON.stringify(values),
-        success: function (response) {
+      titles = []
+      urls = []
+      for (let i = 0; i < values.length; i++) {
+        if (i % 2 == 0) {
+          titles.push(values[i])
+        } else {
+          urls.push(values[i])
         }
-      })
+      }
+      json = []
+      var json = {"brand": titles[i], "url": urls[i]}
+      
+      //for (titles) {
+      // json.append('{brand:' + titles[i] + ',url:' + urls[i] + '}')
     }
+
+    // [
+    //   { b: titles[i], u: urls[i] }, {}, {}
+    // ]
+
+    $.ajax({
+      type: "POST",
+      URL: "/json2csv",
+      header: { "content-type": "application/json" },
+      data: JSON.stringify(json),
+      success: function (response) {
+      }
+    })
+    // }
 
 
 
@@ -145,7 +150,7 @@
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
-          <th width=20><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"></th>
+          <th width=20><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll()"></th>
           <th width=300 scope="col">상품명</th>
           <th width=300 scope="col">URL</th>
         </tr>
