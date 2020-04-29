@@ -20,16 +20,15 @@ def home():
 def searching():
    keyword_receive = request.form['keyword_give']
    response = requests.get("https://openapi.naver.com/v1/search/shop.json",
-                           params={"query": keyword_receive, "display": 1},
+                           params={"query": keyword_receive, "display": 10},
                            headers={"X-Naver-Client-Id": "3T2wQJ3_WgsPtjM1hqgp", "X-Naver-Client-Secret": "BrHLav3UBB"})
-
    print(response.status_code)
    return jsonify({'result':'success', 'msg': '검색이 완료되었습니다', 'items': response.json()['items']})
 
 @app.route('/json2csv', methods=['POST'])
 def json2csv():
     data = request.get_json(force=True)
-    print(type(data))
+    #print(data)
     #df = pd.read_json(data) 
     df = pd.DataFrame(data)
 
@@ -37,10 +36,11 @@ def json2csv():
     output.write(u'\ufeff') # 한글 인코딩 위해 UTF-8 with BOM 설정해주기
     df.to_csv(output)
     # CSV 파일 형태로 브라우저가 파일다운로드라고 인식하도록 만들어주기
+    print(output.getvalue())
     response = Response(
         output.getvalue(),
-        mimetype="text/csv",
-        content_type='application/vnd.ms-excel',
+        mimetype="text/csv;charset=utf-8;",
+        content_type='application/vnd.ms-excel'
         #content_type='application/octet-stream',
     )
     response.headers["Content-Disposition"] = "attachment; filename=download.csv" # 다운받았을때의 파일 이름 지정해주기
