@@ -67,8 +67,8 @@
       $.each($("input[name=checkRow]:checked").closest("td").siblings("td"), function () {
         values.push($(this).text())
       })
-      titles = []
-      urls = []
+      var titles = []
+      var urls = []
       for (let i = 0; i < values.length; i++) {
         if (i % 2 == 0) {
           titles.push(values[i])
@@ -76,26 +76,20 @@
           urls.push(values[i])
         }
       }
-      json = []
-      var json = {"brand": titles[i], "url": urls[i]}
+      var brands = []
       
-      //for (titles) {
-      // json.append('{brand:' + titles[i] + ',url:' + urls[i] + '}')
-    }
-
-    // [
-    //   { b: titles[i], u: urls[i] }, {}, {}
-    // ]
-
+      for (let i = 0; i < titles.length; i++) {
+      	brands.push({'brand': titles[i], 'url': urls[i]})
+      }
     $.ajax({
       type: "POST",
       URL: "/json2csv",
       header: { "content-type": "application/json" },
-      data: JSON.stringify(json),
+      data: JSON.stringify(brands),
       success: function (response) {
       }
     })
-    // }
+    }
 
 
 
