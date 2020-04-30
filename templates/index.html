@@ -79,7 +79,7 @@
       var brands = []
       
       for (let i = 0; i < titles.length; i++) {
-      	brands.push({'brand': titles[i], 'url': urls[i]})
+      	brands.push({'Title': titles[i], 'URL': urls[i]})
       }
     $.ajax({
       type: "POST",
@@ -89,7 +89,7 @@
       success: function (response) {
           //alert(response)
           var _data = response;
-          var _blob = new Blob([_data], {type:'text/csv;charset=utf-8;'});
+          var _blob = new Blob(["\uFEFF"+_data], {type:'text/csv;charset=utf-8;'});
           var _url = URL.createObjectURL(_blob);
           var _link = document.createElement('a');
           _link.href = _url;
@@ -134,13 +134,13 @@
 <body>
   <h1>브랜드 모니터링</h1>
   <nav class="navbar navbar-light">
-    <div class="mx-auto" style="width: 300px;">
+    <div class="mx-auto form-inline" style="width: 300px">
       <!--      <form class="form-inline">-->
       <input class="form-control mr-sm-2" id="search-keyword" type="search" placeholder="브랜드명을 입력하세요."
         aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchkeyword()" type="submit">검색</button>
       <!--/form-->
-    </div>
+      </div>
   </nav>
   <p>
   </p>
