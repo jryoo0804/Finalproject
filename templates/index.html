@@ -78,29 +78,18 @@
         }
       }
       var brands = []
-      
+
       for (let i = 0; i < titles.length; i++) {
-      	brands.push({'brand': titles[i], 'url': urls[i]})
+        brands.push({ 'brand': titles[i], 'url': urls[i] })
       }
-
-
-
-    $.ajax({
-      type: "POST",
-      url: "/json2csv",
-      header: { "content-type": "application/json" },
-      data: JSON.stringify(brands),
-      success: function (response) {
-          //alert(response)
-          var _data = response;
-          var _blob = new Blob([_data], {type:'text/csv;charset=utf-8;'});
-          var _url = URL.createObjectURL(_blob);
-          var _link = document.createElement('a');
-          _link.href = _url;
-          _link.setAttribute('download','download.csv');
-          _link.click();
-      }
-    })
+      $.ajax({
+        type: "POST",
+        URL: "/json2csv",
+        header: { "content-type": "application/json" },
+        data: JSON.stringify(brands),
+        success: function (response) {
+        }
+      })
     }
 
 
