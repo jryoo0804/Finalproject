@@ -60,6 +60,7 @@
       }
     }
 
+
     function exporttoexcel() {
 
       var values = new Array();
@@ -81,6 +82,8 @@
       for (let i = 0; i < titles.length; i++) {
       	brands.push({'brand': titles[i], 'url': urls[i]})
       }
+
+
     $.ajax({
       type: "POST",
       url: "/json2csv",
